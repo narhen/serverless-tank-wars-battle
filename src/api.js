@@ -9,14 +9,14 @@ module.exports = api;
 api.get('/info', function () {
 	'use strict';
 	return {
-		name: 'Rambo',
-		owner: 'Henrik'
+		name: 'yolo',
+		owner: 'The best team'
 	};
 });
 api.post('/command', function (request) {
 	'use strict';
 	var map = request.body;
 	return {
-		command: tankAI(map, ['top', 'bottom'])
+		command: tankAI(map)
 	};
 });

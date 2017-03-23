@@ -1,4 +1,4 @@
-module.exports = function (map, turnOn) {
+module.exports = function (map) {
     'use strict';
     var wallAt = function (point) {
         return map.walls.find(function (wall) {
@@ -38,19 +38,25 @@ module.exports = function (map, turnOn) {
             }
             return false;
         },
-        getChasingAxis = function () { // TODO: check if vd or hd is 0
-            var vertical, horizontal, vd, hd;
-            if (!opponent.x) {
-              return false;
+        getChasingAxis = function (chaserTank, targetTank) {
+            var vertical, horizontal, verticalDist, horizontalDist;
+            if (!hasCoordinates(chaserTank) || !hasCoordinates(targetTank)) {
+              return;
             }
-            vertical = (tank.y < opponent.y) ? 'top' : 'bottom';
-            horizontal = (tank.x < opponent.x) ? 'left' : 'right';
-            vd = Math.abs(tank.y - opponent.y);
-            hd = Math.abs(tank.x - opponent.x);
-            if (hd < vd) {
-              return horizontal;
+
+            vertical = (chaserTank.y < targetTank.y) ? 'bottom' : 'top';
+            horizontal = (chaserTank.x < targetTank.x) ?  'right' : 'left';
+            verticalDist = Math.abs(chaserTank.y - targetTank.y);
+            horizontalDist = Math.abs(chaserTank.x - targetTank.x);
+
+            if (horizontalDist === 0) {
+                return vertical;
+            } else if (verticalDist === 0) {
+                return horizontal;
+            } else if (horizontalDist < verticalDist) {
+                return horizontal;
             } else {
-              return vertical;
+                return vertical;
             }
         },
         randomIntInc = function(low, high) {
@@ -85,10 +91,9 @@ module.exports = function (map, turnOn) {
         nextFieldOpponent = opMovement && { x: opponentTank.x + opMovement.x, y: opponentTank.y + opMovement.y },
         nextFieldMe = opMovement && { x: myTank.x + meMovement.x, y: myTank.y + meMovement.y };
 
-        var result = 'pass';
-        if (targetInSight(myTank, opponentTank) || targetInSight(myTank, nextFieldOpponent)) {
-            result = 'fire';
-        }
 
-        return result;
+        var available_commands = ["fire", "pass", "turn-left", "turn-right", "forward", "reverse"];
+        var random_command = randomIntInc(0, available_commands.length - 1);
+
+        return available_commands[random_command];
 };
