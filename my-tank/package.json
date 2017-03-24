@@ -1,10 +1,10 @@
 {
-  "name": "straight-mover-henrik",
+  "name": "tank-skeleton",
   "version": "1.0.0",
   "private": "true",
   "description": "Simple tankwars that just moves straight and shoots at what it can see",
   "scripts": {
-    "start": "claudia create --region us-east-1 --api-module api",
+    "start": "claudia create --region eu-central-1 --role arn:aws:iam::991652333082:role/cloud-ws --api-module api",
     "deploy": "claudia update"
   },
   "author": "",
