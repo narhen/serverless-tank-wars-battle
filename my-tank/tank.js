@@ -89,7 +89,7 @@ module.exports = function (map) {
         meMovement = myTank.direction && movements[myTank.direction],
         opMovement = opponentTank.direction && movements[opponentTank.direction],
         nextFieldOpponent = opMovement && { x: opponentTank.x + opMovement.x, y: opponentTank.y + opMovement.y },
-        nextFieldMe = opMovement && { x: myTank.x + meMovement.x, y: myTank.y + meMovement.y };
+        nextFieldMe = meMovement && { x: myTank.x + meMovement.x, y: myTank.y + meMovement.y };
 
 
         var available_commands = ["fire", "pass", "turn-left", "turn-right", "forward", "reverse"];
